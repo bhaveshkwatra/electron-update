@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-model.trim="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>DMS 2.0</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <style>
+
+        #tablerow:hover {
+            background: #ccc9c9;
+        }
+        /* Absolute Center Spinner */
+#loading {
+    position: fixed;
+    z-index: 1100;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+    /* Transparent Overlay */
+    #loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+    }
+
+    /* :not(:required) hides these rules from IE9 and below */
+    #loading:not(:required) {
+        /* hide "loading..." text */
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0;
+    }
+
+    #loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+    </style>
+
+</head>
+<body id="body">
+<div id="loading" style="display: none;"></div>
+<header>
+
+    <nav class="navbar navbar-expand-lg" style="background-color:rgb(190, 196, 250);">
+        <a class="navbar-brand">
+            <img src="Erste.jpg" style="width:100px;height:80px;">
+        </a>
+    </nav>
+</header>
+
+ <div class="main" style="margin-top: 10px;">
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+
+            <div class="col-sm-2" style=" overflow:scroll;height: 90vh;min-height: 90vh">
+                
+				<table class="table table-bordered">
+
+                        <!--Table head-->
+                        <thead class="blue-grey" style="color: #fff;">
+                        <tr>
+                            <th>Drives</th>
+                        </tr>
+                        </thead> 
+                        <!--Table head-->
+    
+                        <!--Table body-->
+                        <tbody id="tbodydrive">   
+    
+                        </tbody> 
+                        <!--Table body-->
+    
+                     </table>
+
+                     <script>
+					const drivelists = require('diskinfo');
+					var myDrives = new Array();
+					drivelists.getDrives((err,drives)=>{
+						if(err) throw err;
+						drives.forEach((drive)=>{
+						myDrives.push(drive.mounted+'\\\\');
+						})
+					myDrives.forEach((data)=>{
+                        var value = data.slice(0,2);
+					$('#tbodydrive').append(`<tr><td><i class="fa fa-hdd-o fa-1x" aria-hidden="true"></i><a href="javascript:getDrivesList('${data}')">&nbsp&nbsp${value}</a></td></td>`)
+					})						
+					})
+                    </script>
+
+            </div>
+
+
+            <div class="col-sm-10" style=" overflow:scroll;height: 90vh;min-height: 90vh">
+                <!--Table-->
+                <table class="table table-bordered" >
+
+                    <!--Table head-->
+                    <thead class="blue-grey" style="color: #fff;">
+                    <tr>
+                        <th style="width: 35px;">#</th>
+                        <th>File Name</th>
+                        <th>Type</th>
+                        <th>Date modified</th>
+                        <th>Size in KB</th>
+                    </tr>
+                    </thead> 
+                    <!--Table head-->
+
+                    <!--Table body-->
+                    <tbody id="tbody">
+                        <tr>
+
+                    </tbody> 
+                    <!--Table body-->
+
+                 </table>
+                <!--Table-->
+            </div> 
+
+        </div>
+
+    </div>
+
+</div> 
+</body>
+
+ <script>
+
+    function getDrives(data) {
+            var tr='';
+            var isDrive = true;
+			//console.log(isDrive);
+			//console.log(data.path)
+            $('#tbody').empty();
+            if(isDrive){
+                data.forEach((data)=>{
+                    tr= tr+`<tr id="tablerow">
+                        <td id="${data.path}" scope="row"><i class="fa fa-hdd-o fa-1x" aria-hidden="true"></i></td>
+                        <td id="${data.path}">${data.path}</td>
+                        <td id="${data.path}">Drive</td>
+                        <td id="${data.path}"></td>
+                        <td id="${data.path}"></td>
+                    </tr>`;
+                })
+            }
+            $('#tbody').append(tr);
+            $('tr').dblclick((e)=>{
+			console.log(e.target.id);
+                getDrivesList(e.target.id)
+            })
+    }
+
+    function getDrivesList(path) {
+        new Promise((resolve)=>{
+            axios.get('/drive?path='+path).then(function (data) {
+                resolve(data.data)
+            })
+
+        }).then((data)=>{
+
+            var tr='';
+            var isDrive = data.isDrive
+            if(isDrive==undefined)
+            {
+                $('#tbody').html(data)
+            }
+            else if(!isDrive){
+                $('#tbody').empty();
+                data.folders.forEach((folder)=>{
+                    tr= tr+`<tr id="tablerow">
+                        <td id="${path+folder.name}\\" scope="row"><img style="width: 32px;" src="http://pngimg.com/uploads/folder/folder_PNG8751.png"></td>
+                        <td id="${path+folder.name}\\">${folder.name}</td>
+                        <td id="${path+folder.name}\\">${folder.ext}</td>
+                        <td id="${path+folder.name}\\">${folder.mtime}</td>
+                        <td id="${path+folder.name}\\">${folder.size}</td>
+                    </tr>`;
+                })
+                data.files.forEach((file)=>{
+                    tr= tr+`<tr id="tablerow2">
+                        <td class="file" id="${path+file.name}" scope="row"><img style="width: 32px;" src="http://png-1.findicons.com/files/icons/2420/coded/512/page_blank.png"></td>
+                        <td class="file" id="${path+file.name}">${file.name}</td>
+                        <td class="file" id="${path+file.name}">${file.ext}</td>
+                        <td class="file" id="${path+file.name}">${file.mtime}</td>
+                        <td class="file" id="${path+file.name}">${file.size}</td>
+                    </tr>`;
+                })
+
+            }
+            $('#tbody').append(tr);
+            $('tr').dblclick((e)=>{
+                if(e.target.className===''){
+                    getDrivesList(e.target.id)
+                }
+                else{
+                    window.location='/download?path='+e.target.id;
+                    getDrivesList(path)
+                }
+            })
+        }).catch(reason => {
+            console.log(reason)
+        })
+    }
+</script>
+<script type = "text/javascript">
+    const {remote,shell,ipcRenderer} = require('electron')
+    const {Menu, MenuItem} = remote
+
+     const menu = new Menu();
+     ipcRenderer.on('message', function(event, text) {
+		console.log(text);
+    })
+        var data;
+     // Build menu one item at a time, unlike
+     menu.append(new MenuItem ({
+        label: 'Show',
+        click(menuItem, browserWindow, event) { 
+            openFile(data);
+        }
+     }))
+     menu.append(new MenuItem ({
+        label: 'Print'
+     }))
+
+     menu.append(new MenuItem ({
+        label: 'Import',
+        click() {
+           result = data.split('\\');
+            window.alert(result[1] +" has been import");
+        }
+     }))
+	 
+	  menu.append(new MenuItem ({
+        label: 'Start OCR'
+     }))
+
+    $('table tbody').on("contextmenu", function(e) {
+             if(e.target.classList.contains('file')) {
+                data = e.target.id
+                console.log(data);
+                menu.popup(remote.getCurrentWindow());
+             }
+    })
+    function openFile(path) {
+    shell.openItem(path);
+}
+
+// Listen for messages
+ipcRenderer.on('message', function(event, text) {
+  var container = document.getElementById('loading');
+  if(container.style.display === 'none') {
+    container.style.display = "block";
+  } else {
+    container.style.display = "none";
+  }
+})
+
+    
+</script> 
+
+</html>
