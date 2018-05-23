@@ -1,6 +1,6 @@
 {
   "name": "electron-dms",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Electron-DMS-MODIFY",
   "main": "main.js",
   "scripts": {

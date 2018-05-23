@@ -3,6 +3,7 @@ const path = require('path');
 const url = require('url');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
+const {ProgId, ShellOption, Regedit} = require('electron-regedit');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -44,6 +45,13 @@ let win = null;
     win = new BrowserWindow({width: 2000, height: 1100})
     win.loadURL('http://localhost:8004/');
     win.focus();
+    new ProgId({
+      shell: [
+          new ShellOption({verb: ShellOption.OPEN})
+      ]
+  })
+  
+Regedit.installAll();
    // win.webContents.openDevTools();
 }
 
